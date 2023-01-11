@@ -182,9 +182,12 @@ def get_live_lineups():
     current_lineups = [token[:3] if len(token) == 6 else token[:2] if len(token) == 5 else token[0] for token in current_lineups]
     current_lineups = [" ".join(player) if type(player) == list else player for player in current_lineups]
     
-    indices = [i for i, player in enumerate(current_lineups) if player == "Starters"]
-    for (idx, team) in zip(indices, games_teams):
-        current_lineups[idx] = team
+    index = -1
+    for idx, player in enumerate(current_lineups):
+        if player == 'Starters':
+            index += 1
+            
+        current_lineups[idx] = {'player': player, 'team': games_teams[index]}
     
     return current_lineups
 
